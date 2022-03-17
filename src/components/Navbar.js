@@ -49,7 +49,8 @@ export default function Nav() {
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+                <Flex h={16} alignItems={'center'} justifyContent={'space-around'}>
+                    <Box>Logo</Box>
 
                     <Button
                         onClick={isOpen ? onClose : onOpen}
@@ -59,7 +60,6 @@ export default function Nav() {
                     </Button>
 
                     <HStack spacing={8} alignItems={'center'}>
-                        <Box>Logo</Box>
                         <HStack
                             as={'nav'}
                             spacing={4}
@@ -69,7 +69,7 @@ export default function Nav() {
                                     <NavsLink key={link.id} link={link} />
                                 ))}                                
                         </HStack>
-                    </HStack>
+                    </HStack>                
 
                     <Flex alignItems={'center'}>
                         <Stack direction={'row'} spacing={7}>
