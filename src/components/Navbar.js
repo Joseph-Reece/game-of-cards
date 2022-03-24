@@ -22,9 +22,8 @@ import { RiMoonFill, RiSunLine, RiMenu2Fill, RiCloseFill } from 'react-icons/ri'
 // links with references to pages
 const Links = [
     { id:1, name: 'Home', target: '/' }, 
-    { id:2, name: 'About', target: 'about' }, 
-    { id:3, name: 'Projects', target: '#Projects' }, 
-    { id:4, name: 'Team', target: '#Team' }, 
+    // { id:2, name: 'About', target: 'about' }, 
+    { id:3, name: 'Gameroom', target: 'gameroom' },
 ];
 
 const NavsLink = ({ link }) => (    
@@ -50,7 +49,12 @@ export default function Nav() {
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-around'}>
-                    <Box>Logo</Box>
+                    {/* <Box>Logo</Box> */}
+                    {/* image logo */}
+                    <Box>
+                        <img src="assets/images/logo.png" alt="logo" width="50px" />
+                    </Box>
+
 
                     <Button
                         onClick={isOpen ? onClose : onOpen}

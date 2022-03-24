@@ -1,6 +1,7 @@
 import axios from 'axios'
 // congif axios
 axios.defaults.baseURL = 'https://deckofcardsapi.com/api/deck/'
+// headers: {"Access-Control-Allow-Origin": "*"}
 
 export const getDeck = () => axios.get(`new/shuffle/?deck_count=1`)
 

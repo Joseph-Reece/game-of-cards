@@ -6,9 +6,9 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Redirect,
 } from 'react-router-dom';
-import About from './pages/About';
+// import About from './pages/About';
+import Gameroom from './pages/Gameroom';
 
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
         <Routes>
           <Route path="/" element ={<Landing />} />
           <Route path="/landing" element ={<Landing />} />
-          <Route path="/about" element ={<About />} />
+          <Route path="/gameroom" element ={<Gameroom />} />
         </Routes>
     </Router>
   );
