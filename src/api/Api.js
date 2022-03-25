@@ -3,7 +3,17 @@ import axios from 'axios'
 axios.defaults.baseURL = 'https://deckofcardsapi.com/api/deck/'
 // headers: {"Access-Control-Allow-Origin": "*"}
 
+// Hot Tip: Add jokers_enabled=true as a GET or POST parameter to your request to include two Jokers in the deck.
+// https://deckofcardsapi.com/api/deck/new/shuffle/?jokers_enabled=true
 export const getDeck = () => axios.get(`new/shuffle/?deck_count=1`)
+
+// Reshuffle the cards in a deck.
+// https://deckofcardsapi.com/api/deck/<<deck_id>>/shuffle/
+export const reshuffleDeck = (deckId) => axios.get(`${deckId}/shuffle/`)
+
+// Reshuffle only remaining cards in the deck (i.e., cards not yet dealt).
+// https://deckofcardsapi.com/api/deck/<<deck_id>>/shuffle/?remaining=true
+export const reshuffleRemainingDeck = (deckId) => axios.get(`${deckId}/shuffle/?remaining=true`)
 
 export const drawCard = (deckId) => axios.get(`${deckId}/draw/?count=1`)
 
