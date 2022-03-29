@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Box,
     Button,
@@ -15,10 +15,11 @@ import {
 } from '@chakra-ui/react';
 import { EditIcon, CheckIcon, CloseIcon, } from '@chakra-ui/icons'
 import { getDeck, reshuffleDeck } from '../api/Api';
+import axios from 'axios';
 
 const Gameroom = () => {
     const [deckId, setDeckId] = useState('3fg706ilqfvk');
-    const [isGameActive, setIsGameActive] = useState(true);
+    const [isGameActive, setIsGameActive] = useState(false);
 
     const [input, setInput] = useState('')
     const [playerNames, setPlayerNames] = useState(['Player 1', 'Player 2'])
@@ -26,13 +27,44 @@ const Gameroom = () => {
     const handleInputChange = (e) => setInput(e.target.value)
 
 
-    const isError = input === '' || playerNames.length < 2;
+    const isError = input === '' || playerNames.length < 2 || !isGameActive;
+
+    // AbortController represents a controller object that allows you to abort one or more Web requests as and when desired. 
+    // It is a global object that is available in the browser and Node.js.
+    // It is used to abort fetch requests.
+    // The other option is using axios cancelToken() method.
+    useEffect(() => {
+
+        // let abortController;
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+
+        (async () => {
+
+            // abortController = new AbortController();
+            // let signal = abortController.signal;
+
+            const { data } = await getDeck(
+                // { signal: signal } to use with abortcontroller                
+                {cancelToken: source.token}
+            ).catch(err => {
+                if (axios.isCancel(err)) {
+                    console.log('successfully aborted');
+                  } else {
+                    // handle error
+                    console.log(err)
+                  }
+            })
+            console.log(data)
+            setDeckId(data.deck_id)
+            setIsGameActive(true);
+        })()
+
+        return () =>  source.cancel();
+    }, [])
 
     const activateRoom = async () => {
-        await getDeck().then(res => {
-            setIsGameActive(true)
-            setDeckId(res.data.deck_id)
-        }).catch(err => console.log(err))
+
     }
 
     const reshuffle = () => {

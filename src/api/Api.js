@@ -15,7 +15,14 @@ export const reshuffleDeck = (deckId) => axios.get(`${deckId}/shuffle/`)
 // https://deckofcardsapi.com/api/deck/<<deck_id>>/shuffle/?remaining=true
 export const reshuffleRemainingDeck = (deckId) => axios.get(`${deckId}/shuffle/?remaining=true`)
 
-export const drawCard = (deckId) => axios.get(`${deckId}/draw/?count=1`)
+export const drawCard = (deckId) => axios.get(`${deckId}/draw/?count=4`)
+
+// Add cards to pile.
+// https://deckofcardsapi.com/api/deck/<<deck_id>>/pile/<<pile_name>>/add/?cards=<<card_ids>>
+export const addCardsToPile = (deckId, pileName, cardIds) => axios.get(`${deckId}/pile/${pileName}/add/?cards=${cardIds}`)
+
+// return all cards to deck
+export const returnAllCards = (deckId) => axios.post(`${deckId}/return/`)
 
 export const addToPile = (pile, card) => {
     const newPile = [...pile, card]
