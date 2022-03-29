@@ -8,7 +8,7 @@ import {
   Routes,
 } from 'react-router-dom';
 // import About from './pages/About';
-import Gameroom from './pages/Gameroom';
+import Gameroom from './features/gameroom/GameRoom';
 
 
 function App() {

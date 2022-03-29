@@ -2,20 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { store } from './app/store';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
 // 1. import `ChakraProvider` component
 import { ChakraProvider } from '@chakra-ui/react'
 
+let persistor = persistStore(store);
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>      
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
+      </PersistGate>
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode >,
   document.getElementById('root')
 );
 
