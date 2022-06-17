@@ -6,7 +6,9 @@ import {
   ButtonGroup,
   Container,
   Text,
-  Heading
+  Heading,
+  Grid,
+  GridItem
 } from '@chakra-ui/react'
 
 
@@ -57,6 +59,7 @@ import {
   selectGameLostMessage,
   selectIsGameDraw,
   selectGameDrawMessage,
+  DrawACard,
 
 } from './gameroomSlice';
 
@@ -151,96 +154,103 @@ const GameRoom = () => {
 
   const setPlayerNamesSet = () => {
     dispatch(setPlayerNames(['Player 1', 'Player 2']));
+    console.log(playerNames)
   }
 
   const startGameSet = () => {
     dispatch(startGame());
+    console.log(playerNames)
+  }
+
+  const GetACard = () => {
+    dispatch(DrawACard());
+    console.log("here")
   }
 
   return (
-    <>
-      <Container>
-        <Heading>
-          Game Room
-        </Heading>
-        <Box  bg="blue.300" padding={3}>
-          <ButtonGroup justifyContent='center' size='sm'>
-            <Button
-              onClick={getDeckSet}
-              isDisabled={deckId || isLoading || isGameStarted || isGameOverr || isGameWonr || isGameLostr || isGameDrawr}
-            >
-              {!isLoading ?               
-                'Get Deck'
+    <Container maxW='container.sm'>
+      <Heading>
+        Game Room
+      </Heading>
+      <Box bg="blue.300" padding={3}>
+        <ButtonGroup justifyContent='center' size='sm'>
+          <Button
+            onClick={getDeckSet}
+            isDisabled={deckId || isLoading || isGameStarted || isGameOverr || isGameWonr || isGameLostr || isGameDrawr}
+          >
+            {!isLoading ?
+              'Get Deck'
               :
-                'Loading ...  '
-              }
-            </Button>
+              'Loading ...  '
+            }
+          </Button>
 
-            <Button
-              onClick={reshuffleDeckSet}
-              isDisabled={deckId == null || isError || isReshuffling || isReshufflingError}
-            >
-              {!isReshuffling ?               
-                'Reshuffle Deck'
+          <Button
+            onClick={reshuffleDeckSet}
+            isDisabled={deckId == null || isError || isReshuffling || isReshufflingError}
+          >
+            {!isReshuffling ?
+              'Reshuffle Deck'
               :
-                'Loading ...  '
-              }
-            </Button>
+              'Loading ...  '
+            }
+          </Button>
 
-            <Button
-              onClick={startGameSet}
-              isDisabled={!deckId ||  isLoading || isGameStarted || isGameOverr || isGameWonr || isGameLostr || isGameDrawr}
-            >
-              {!isReshuffling ?               
-                'Start Game'
+          <Button
+            onClick={startGameSet}
+            isDisabled={!deckId || isLoading || isGameStarted || isGameOverr || isGameWonr || isGameLostr || isGameDrawr}
+          >
+            {!isReshuffling ?
+              'Start Game'
               :
-                'Loading ...  '
-              }
-            </Button>
+              'Loading ...  '
+            }
+          </Button>
 
-            <Button
-              onClick={dispatch(StopGame())}
-              isDisabled={!deckId ||  isLoading || !isGameStarted || isGameOverr || isGameWonr || isGameLostr || isGameDrawr}
-            >
-              {!isReshuffling ?               
-                'Stop Game'
+          <Button
+            onClick={dispatch(StopGame())}
+            isDisabled={!deckId || isLoading || !isGameStarted || isGameOverr || isGameWonr || isGameLostr || isGameDrawr}
+          >
+            {!isReshuffling ?
+              'Stop Game'
               :
-                'Loading ...  '
-              }
-            </Button>
-          </ButtonGroup>
-        </Box>
-        <div>
-          <div>deckId: {deckId}</div>
-          <div>isGameActive: {isGameActive}</div>
-          <div>isError: {isError}</div>
-          <div>errorMessage: {errorMessage}</div>
-          <div>playerNames: {playerNames}</div>
-          <div>input: {input}</div>
-          <div>isLoading: {isLoading}</div>
-          <div>isReshuffling: {isReshuffling}</div>
-          <div>isReshufflingError: {isReshufflingError}</div>
-          <div>reshuffleErrorMessage: {reshuffleErrorMessage}</div>
-          <div>reshuffleDeckId: {reshuffleDeckId}</div>
-          <div>reshuffleDeck: {reshuffleDeck}</div>
-          <div>isGameOver: {isGameOver}</div>
-          <div>gameOverMessage: {gameOverMessage}</div>
-          <div>isGameWon: {isGameWon}</div>
-          <div>gameWonMessage: {gameWonMessage}</div>
-          <div>isGameLost: {isGameLost}</div>
-          <div>gameLostMessage: {gameLostMessage}</div>
-          <div>isGameDraw: {isGameDraw}</div>
-          <div>gameDrawMessage: {gameDrawMessage}</div>
-        </div>
-      </Container>
+              'Loading ...  '
+            }
+          </Button>
+
+          <Button
+            onClick={setPlayerNamesSet}
+            isDisabled={!deckId || isLoading || !isGameStarted || isGameOverr || isGameWonr || isGameLostr || isGameDrawr}
+          >
+            {!isReshuffling ?
+              'Enter Players'
+              :
+              'Loading ...  '
+            }
+          </Button>
+        </ButtonGroup>
+      </Box>
       <div>
-        <div>isGameStarted: {isGameStarted}</div>
-        <div>isGameOverr: {isGameOverr}</div>
-        <div>isGameWonr: {isGameWonr}</div>
-        <div>isGameLostr: {isGameLostr}</div>
-        <div>isGameDrawr: {isGameDrawr}</div>
+        <div>deckId: {deckId}</div>
+        <div>isGameActive: {isGameActive}</div>
+        <div>isError: {isError}</div>
+        <div>errorMessage: {errorMessage}</div>
+        <div>playerNames: {playerNames}</div>
       </div>
-    </>
+      <Button
+      onClick={GetACard}
+      >
+        Draw Card
+      </Button>
+      <Grid templateColumns='repeat(2, 1fr)' gap={6}>
+        <GridItem w='100%' bg='blue.500' p="5px" >
+          <Heading>{playerNames[0]}</Heading>
+        </GridItem>
+        <GridItem w='100%' bg='blue.500' p="5px" >
+          <Heading>{playerNames[1]}</Heading>
+        </GridItem>
+      </Grid>
+    </Container>
   );
 };
 

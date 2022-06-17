@@ -235,51 +235,12 @@ export const startGame = () => (dispatch, getState) => {
     if (getState().gameroom.isGameActive) {
         return;
     }
-    // dispatch(setIsGameActive(true));
+    dispatch(setIsGameActive(true));
+    console.log(getState().gameroom.isGameActive)
 
     const deckId = getState().gameroom.deckId;
-    const playerNames = getState().gameroom.playerNames;
 
     reshuffleDeck(deckId)
-
-    playerNames.forEach(async (playerName) => {
-        console.log(playerName)
-
-        const pileName = playerName.split(' ')  
-
-        const {data} = await drawCard(deckId)
-        const cards = [
-            data.cards[0].code,
-            data.cards[1].code,
-            data.cards[2].code,
-            data.cards[3].code,
-        ]
-        
-        const pile = await addCardsToPile(deckId,pileName[0].concat(pileName[1]) ,cards);
-
-        console.log(pile)
-    });
-    // playerNames.map((playerName) => (
-    //     console.log(playerName)
-
-    //     const cards = drawCard(deckId, playerName)
-
-    // ));
-    // }).then(() => {
-    //     dispatch(setIsGameActive(true));
-    // }).catch((error) => {
-    //     dispatch(setIsError(true));
-    //     dispatch(setErrorMessage(error.message));
-    // });
-
-    console.log(playerNames)
-
-    // dispatch(setIsLoading(true));
-    // dispatch(setIsError(false));
-    // dispatch(setErrorMessage(''));
-
-    // addCardsToPile(deckId, playerNamesString)
-
 }
 
 export const StopGame = () => (dispatch, getState) => {
@@ -287,6 +248,23 @@ export const StopGame = () => (dispatch, getState) => {
         return;
     }
     dispatch(setIsGameActive(false));
+}
+
+export const DrawACard = () => (dispatch, getState) => {
+
+    const deckId = getState().gameroom.deckId;
+
+    const getCard = async () => {
+        await drawCard(deckId).then(res => {
+            // dispatch(setInput(response.card));
+            // dispatch(setPlayerNames(name));
+            console.log(res.data);
+            
+        });
+    }
+
+    getCard();   
+
 }
 
 export const reshuffleDeckRemaining = () => (dispatch, getState) => {
@@ -306,6 +284,7 @@ export const reshuffleDeckRemaining = () => (dispatch, getState) => {
                 dispatch(setIsReshuffling(false));
                 dispatch(setReshuffleDeckId(response.data.deck_id));
                 dispatch(setReshuffleDeck(response.data.deck));
+                console.log("SD")
             } else {
                 dispatch(setIsReshuffling(false));
                 dispatch(setIsReshufflingError(true));

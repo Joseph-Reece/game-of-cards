@@ -15,7 +15,7 @@ export const reshuffleDeck = (deckId) => axios.get(`${deckId}/shuffle/`)
 // https://deckofcardsapi.com/api/deck/<<deck_id>>/shuffle/?remaining=true
 export const reshuffleRemainingDeck = (deckId) => axios.get(`${deckId}/shuffle/?remaining=true`)
 
-export const drawCard = (deckId) => axios.get(`${deckId}/draw/?count=4`)
+export const drawCard = (deckId) => axios.get(`${deckId}/draw/?count=1`)
 
 // Add cards to pile.
 // https://deckofcardsapi.com/api/deck/<<deck_id>>/pile/<<pile_name>>/add/?cards=<<card_ids>>
